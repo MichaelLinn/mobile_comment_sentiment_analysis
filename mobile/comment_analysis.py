@@ -114,4 +114,3 @@ class mobile_analysis:
                                     pos_word.append(word)
 
         return pos_word, neg_word
-
