@@ -57,6 +57,7 @@ class mobile_analysis:
                 neg_word.append(line.strip())
         return neg_word
 
+    # add keywords
     def add_keyword(self, keyword):
         self.keywords.append(keyword)
 
@@ -65,7 +66,6 @@ class mobile_analysis:
 
     def add_negword(self, word):
         self.neg_words.append(word)
-
 
 
     """
