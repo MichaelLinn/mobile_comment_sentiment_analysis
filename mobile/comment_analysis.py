@@ -57,6 +57,17 @@ class mobile_analysis:
                 neg_word.append(line.strip())
         return neg_word
 
+    def add_keyword(self, keyword):
+        self.keywords.append(keyword)
+
+    def add_posword(self, word):
+        self.pos_words.append(word)
+
+    def add_negword(self, word):
+        self.neg_words.append(word)
+
+
+
     """
     # word segmentation
     Input: the original comments
