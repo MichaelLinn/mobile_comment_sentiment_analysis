@@ -24,6 +24,7 @@ analysis.set_word_distance(5)
 
 # Get a positive keyword list and a negative keyword list based on your original comment
 pos, neg = analysis.analyse_sentiment(comment)
+
 print "positive keyword:"
 for n in neg:
     print n

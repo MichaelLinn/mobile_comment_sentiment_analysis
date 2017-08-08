@@ -71,10 +71,6 @@ def stat_commemt(comment_record):
         }
     )
 
-"""
-record = collection.find_one()
-stat_commemt(record)
-"""
 
 cursor = collection.find()
 for cur in cursor:
