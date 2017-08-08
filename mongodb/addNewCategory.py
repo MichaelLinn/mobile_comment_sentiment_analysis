@@ -5,16 +5,7 @@ Author : Jason
 
 """
 import pymongo
-from mobile.comment_analysis import mobile_analysis
 
-
-category = []
-config = {
-    'user': 'root',
-    'password': '123456',
-    'host': '192.168.200.206',
-    'database': 'lenovoforum2',
-}
 
 client = pymongo.MongoClient('192.168.200.47', 27017)
 db = client['spider']
@@ -23,6 +14,6 @@ collection = db.mobile_category
 
 # insert a new subcategory into an appointed category
 category = "外观"
-new_category = "什么鬼"
+new_subcategory = "什么鬼"
 collection.update({'category':category},
-                  {'$push':{'subcategory': new_category}})
+                  {'$push':{'subcategory': new_subcategory}})

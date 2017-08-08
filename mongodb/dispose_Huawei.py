@@ -7,21 +7,22 @@ Author : Jason
 import pymongo
 from mobile import comment_analysis
 
+# load the keyword-based sentiment analysis algorithm
 anaysis = comment_analysis.mobile_analysis()
 
-category = []
-config = {
-    'user': 'root',
-    'password': '123456',
-    'host': '192.168.200.206',
-    'database': 'lenovoforum2',
-}
-
+# Connect to MongoDB
 client = pymongo.MongoClient('192.168.200.47', 27017)
 db = client['spider']
-# Select collection
+
+# Select collection in the MongoDB
 collection = db['HUAWEI']
 
+
+"""
+do the sentiment analysis and statistic on comment of a specific mobilephone brand
+# Input: one document in the collection of the Mobilephone
+
+"""
 def stat_commemt(comment_record):
 
     list = comment_record['reviews']
@@ -54,13 +55,8 @@ def stat_commemt(comment_record):
                 if neg[i] == item:
                     cat_neg[cat] = cat_neg.get(cat, 0) + 1
 
-    for c in cat_pos:
-        print c , ":", cat_pos[c]
 
-    print "--------------"
-    for c in cat_neg:
-        print c , ":", cat_neg[c]
-
+    #insert positive and negative features into the specific Mobilephone document in MongoDB
     collection.update_one(
         {"_id": id},
         {
@@ -72,6 +68,7 @@ def stat_commemt(comment_record):
     )
 
 
+# main function
 cursor = collection.find()
 for cur in cursor:
     stat_commemt(cur)
