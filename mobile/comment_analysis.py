@@ -9,15 +9,15 @@ import jieba
 class mobile_analysis:
 
     # keyword bank
-    keywords_file = "../word_bank/keywords.txt"
+    keywords_file = "../word_bank/key.txt"
     # stopword bank
     stopword_file = "../word_bank/stopword.txt"
     # 指定自己自定义的词典，以便包含jieba词库里没有的词，提高jieba分词的精度
     self_built_wordbank_file = "../word_bank/ciku.txt"
     # positive word bank
-    posword_file = '../word_bank/pos_siat.txt'
+    posword_file = '../word_bank/pos_key.txt'
     # negative word bank
-    negword_file = '../word_bank/neg_siat.txt'
+    negword_file = '../word_bank/neg_key.txt'
     # set word distance
     distance = 5
 
@@ -111,17 +111,23 @@ class mobile_analysis:
             word = comment_word[i]
             for j in range(len(self.keywords)):
                 if word == self.keywords[j]:
-                    flag = i
+                    idx_f = i
+                    flag = False
                     for dist in distance_list:
-                        idx = flag + dist
+                        idx = idx_f + dist
                         if idx > 0 and idx < len(comment_word):
                             e_word = comment_word[idx]
                             e_word = e_word.encode('utf-8')
                             for pos in self.pos_words:
                                 if e_word == pos:
-                                    neg_word.append(word)
+                                    pos_word.append(word)
+                                    flag = True
+                                    break
                             for neg in self.neg_words:
                                 if e_word == neg:
-                                    pos_word.append(word)
-
+                                    neg_word.append(word)
+                                    flag = True
+                                    break
+                            if flag:
+                                break
         return pos_word, neg_word
