@@ -17,8 +17,8 @@ collection = db['zol']
 reviews = collection.find_one()
 
 # Fetch a comment from MongoDB
-comment = reviews['phone_reviews'][0]['comment']['summary']
-
+comment = "送货速度很快，手机也很好"
+print comment
 # Set up the word distance(default value is 5)
 analysis.set_word_distance(5)
 
@@ -26,8 +26,8 @@ analysis.set_word_distance(5)
 pos, neg = analysis.analyse_sentiment(comment)
 
 print "positive keyword:"
-for n in neg:
-    print n
-print "negative keyword:"
 for p in pos:
     print p
+print "negative keyword:"
+for n in neg:
+    print n

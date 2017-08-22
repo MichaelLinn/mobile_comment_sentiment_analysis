@@ -7,9 +7,8 @@ Author : Jason
 import pymongo
 from mobile import comment_analysis
 
-# load the keyword-based sentiment analysis algorithm
 anaysis = comment_analysis.mobile_analysis()
-
+anaysis.set_word_distance(8)
 # Connect to MongoDB
 client = pymongo.MongoClient('192.168.200.47', 27017)
 db = client['spider']
@@ -24,19 +23,20 @@ do the sentiment analysis and statistic on comment of a specific mobilephone bra
 
 """
 def stat_commemt(comment_record):
-
+    remain = 0
     list = comment_record['reviews']
     pos = []
     neg = []
     id = comment_record['_id']
-    i = 0
     for l in list:
         review = l['review']
+
         p,n = anaysis.analyse_sentiment(review)
+        if len(p) != 0 or len(n) != 0:
+            remain = remain + 1
         pos.extend(p)
         neg.extend(n)
-        i = i + 1
-        print "-----",i,"-----"
+
 
     cat_pos = {}
     cat_neg = {}
@@ -67,8 +67,19 @@ def stat_commemt(comment_record):
         }
     )
 
+    return len(list), remain
+
 
 # main function
+s = 0
+r = 0
 cursor = collection.find()
+
 for cur in cursor:
-    stat_commemt(cur)
+    s_t, r_t = stat_commemt(cur)
+    s = s + s_t
+    r = r + r_t
+
+print "sum:", s
+print "remain:", r
+print "percentage:", float(r/s)
